@@ -15,8 +15,12 @@ The function should:
   Example createMenuItem('tacos', 8, 'Lunch') should return {name: 'tacos', price: 8, category: 'Lunch'}
 */
 
-function createMenuItem(/*Your code here*/){
-    /*Your code here*/
+function createMenuItem( name, price, category ) {
+  return {
+    name: name,
+    price: price,
+    category: category
+  }
 }
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 1b: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -29,6 +33,9 @@ Test your createMenuItems function by doing the following:
   For example: createMenuItem("pizza",5,"lunch") would return this as the object: {name:"Pizza",price:5,category:"lunch"}
 */
 
+createMenuItem( "Pizza", 6.34, "Dinner" );
+createMenuItem( "hotdog", 6.34, "Dinner" );
+createMenuItem( "pickle", 6.34, "Dinner" );
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 2: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -45,12 +52,17 @@ Using the burger object below do the following:
 */
 
 export const burger = {
-  name: "Burger", 
-  price: 18, 
-  category: "Lunch", 
-  /*Your code here*/
+  name: "Burger",
+  price: 18,
+  category: "Lunch",
+  discount: function ( person ) {
+    if ( person == "teacher" || person == "student" ) {
+      return this.price - ( this.price * .25 );
+    } else {
+      return this.price - ( this.price * .10 )
+    }
+  }
 }
-
 
 
 ///////////////Reviews (MVP)///////////////////
@@ -69,7 +81,10 @@ const reviews = [
 Using the reviews array above:
   1. log only Julius' feedback to the console - no function needed 
 */
-
+for ( let i = 0; i < reviews.length - 1; i++ ) {
+   if(reviews[i].name=="Julius")
+   console.log("result ",reviews[i].feedback)
+}
 
 
 
@@ -78,7 +93,12 @@ Using the reviews array above do the following: (no function needed)
   1. Following the same format (name, rating, feedback), add a new fictitious review object to the reviews array
   2. log the whole array to the console, make sure the new review is inside of it   
 */
-
+const fictitious = {
+  name: "Bryan",
+  rating: 5,
+  feedback: "one"
+}
+reviews.push( fictitious )
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 5: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
@@ -102,9 +122,10 @@ Use the getReviewByIndex function below to do the following:
 */
 
 
-function getReviewByIndex(/*Your code here*/) {
-  /*Your code here*/
+function getReviewByIndex( arr, numb ) {
+  return `${arr[numb].name} gave the restaurant a ${arr[numb].rating} star review, and their feedback was: ${arr[numb].feedback}`
 }
+getReviewByIndex(reviews, 0);
 
 
   
@@ -121,9 +142,11 @@ Use the getLastReview function below to do the following:
 */
 
 
-function getLastReview(/*Your code here*/) {
-  /*Your code here*/
-} 
+function getLastReview( obj ) {
+  let lastRev = ( obj[ obj.length - 1 ].name + " gave the restaurant a " + obj[ obj.length - 1 ].rating + " star review, and their feedback was: " + obj[ obj.length - 1 ].feedback )
+  return lastRev;
+}
+getLastReview( reviews )
 
 
 
@@ -143,9 +166,14 @@ Use the getReviewsByRating function below to do the following:
   ]
 */
 
- function getReviewByRating(/* code here */) {
-    /* code here */
-  }
+function getReviewByRating( arr, numb ) {
+  let result;
+  result = arr.filter( curElement => {
+ return ( Math.floor( numb ) <= curElement.rating && curElement.rating < Math.ceil( numb ) );
+  } );
+  return result;
+}
+console.log( "result ", getReviewByRating( reviews, 4 ) );
 
   
 /* 💪💪💪💪💪💪💪💪💪💪 STRETCH 2: 💪💪💪💪💪💪💪💪💪💪   
@@ -161,9 +189,14 @@ Use the getLongReviews function below to do the following:
   ]
 */
 
-function getLongReviews(/* code here */) {
-    /* code here */
-  }
+function getLongReviews( arr ) {
+  let result = arr.filter( ( curElement ) => {
+    return curElement.feedback.length >= 15;
+  } )
+  return result;
+}
+console.log( getLongReviews( reviews ) )
+getLongReviews( reviews )
   
 
 /* 💪💪💪💪💪💪💪💪💪💪 STRETCH 3: 💪💪💪💪💪💪💪💪💪💪 
@@ -183,11 +216,19 @@ Use the carMaker function below to do the following:
   It would return 110 because it was created with 10 as the odometer and we added 100 to it with the drive method 
 */
 
-
-function carMaker(/* code here */) {
-    /* code here */
-    
+function carMaker( miles ) {
+  const carObj = {
+    odometer: miles,
+    drive: function ( distance ) {
+      this.odometer += distance;
+      return this.odometer;
+    }
+  }
+  return carObj
 }
+let car1 = carMaker( 10 );
+console.log( car1.drive( 100 ) );
+
 
 
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
